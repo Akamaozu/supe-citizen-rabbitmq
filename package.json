@@ -1,0 +1,20 @@
+{
+  "name": "supe-citizen-rabbitmq",
+  "version": "1.0.0",
+  "description": "RabbitMQ Connection as a Supe Citizen",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "jackrabbit": "^4.4.0",
+    "uuid": "^3.3.2"
+  },
+  "peerDependencies": {
+    "cjs-task": "^2.2.0",
+    "supe": "^0.5.0",
+    "supe-addon-citizen-request": "^2.0.1"
+  }
+}
