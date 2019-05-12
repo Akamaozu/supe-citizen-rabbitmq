@@ -49,7 +49,7 @@ module.exports = function( task, config ){
             alternateExchange: options.alternateExchange ? options.alternateExchange : undefined
           };
 
-      var rabbitmq = task.get( 'rabbitmq' )
+      var rabbitmq = task.get( 'rabbitmq' );
       if( ! rabbitmq.hasOwnProperty( exchange_config.type ) ) throw new Error( 'unknown exchange type: "' + exchange_config.type + '"' );
 
       // create exchange
