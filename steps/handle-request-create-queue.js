@@ -9,11 +9,11 @@ module.exports = function( task, config ){
 
     citizen.request.handle( 'create-queue', function( envelope, end_request ){
       var request = envelope.msg,
-          queue_id = request.data.queue_id,
-          options = request.data.options || {};
+          success = false,
+          error;
 
       try {
-        handle_create_queue_request( queue_id, options );
+        handle_create_queue_request( request, end_request );
         success = true;
       }
 
@@ -21,8 +21,7 @@ module.exports = function( task, config ){
         error = create_error;
       }
 
-      if( ! success ) end_request( error );
-      else end_request( null, success );
+      if( ! success ) return end_request( error );
     });
 
     task.next();
