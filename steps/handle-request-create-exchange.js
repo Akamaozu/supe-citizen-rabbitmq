@@ -6,13 +6,11 @@ module.exports = function( task, config ){
 
     citizen.request.handle( 'create-exchange', function( envelope, end_request ){
       var request = envelope.msg,
-          exchange_id = request.data.exchange_id,
-          options = request.data.options,
           success = false,
           error;
 
       try {
-        create_exchange( exchange_id, options );
+        create_exchange( request, end_request );
         success = true;
       }
 
@@ -21,13 +19,15 @@ module.exports = function( task, config ){
       }
 
       if( ! success ) end_request( error );
-      else end_request( null, success );
     });
 
     task.next();
 
-    function create_exchange( exchange_id, options ){
-      if( ! exchange_id ) throw new Error ( 'exchange id not specified' );
+    function create_exchange( request, end_request ){
+      var exchange_id = request.data.exchange_id,
+          options = request.data.options;
+
+      if( ! exchange_id ) return end_request( new Error ( 'exchange id not specified' ) );
       if( ! options ) options = {};
 
       var exchanges = task.get( 'exchanges' );
@@ -37,7 +37,7 @@ module.exports = function( task, config ){
         task.set( 'exchanges', exchanges );
       }
 
-      if( exchanges.hasOwnProperty( exchange_id ) ) throw new Error( 'exchange "' + exchange_id + '" already exists' );
+      if( exchanges.hasOwnProperty( exchange_id ) ) return end_request( new Error( 'exchange "' + exchange_id + '" already exists' ) );
 
       var exchange_config = {
             type: options.type ? options.type : 'default',
@@ -50,7 +50,7 @@ module.exports = function( task, config ){
           };
 
       var rabbitmq = task.get( 'rabbitmq' );
-      if( ! rabbitmq.hasOwnProperty( exchange_config.type ) ) throw new Error( 'unknown exchange type: "' + exchange_config.type + '"' );
+      if( ! rabbitmq.hasOwnProperty( exchange_config.type ) ) return end_request( new Error( 'unknown exchange type: "' + exchange_config.type + '"' ) );
 
       // create exchange
         var created_exchange = rabbitmq[ exchange_config.type ]( exchange_config.name, exchange_config );
@@ -76,6 +76,10 @@ module.exports = function( task, config ){
 
           console.log( log_msg );
         });
+
+      created_exchange.on( 'ready', function(){
+        end_request( null, { name: created_exchange.name });
+      });
     }
   });
 }
