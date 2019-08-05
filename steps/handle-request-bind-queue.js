@@ -50,7 +50,7 @@ module.exports = function( task, config ){
       bind_queue.set( 'rabbitmq-connection', task.get( 'rabbitmq-connection' ) );
 
       bind_queue.step( 'create connection channel', function(){
-        var connection = bind_queue.get( 'rabbitmq-exchange' );
+        var connection = bind_queue.get( 'rabbitmq-connection' );
 
         connection.createChannel( function( error, channel ){
           if( error ) return bind_queue.end( error );
