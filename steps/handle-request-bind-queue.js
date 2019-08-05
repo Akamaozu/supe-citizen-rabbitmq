@@ -47,10 +47,12 @@ module.exports = function( task, config ){
       bind_queue.set( 'exchange-id', exchange_id );
       bind_queue.set( 'bind-key', bind_key );
       bind_queue.set( 'bind-options', options );
-      bind_queue.set( 'rabbitmq-connection', task.get( 'rabbitmq-connection' ) );
+      bind_queue.set( 'rabbitmq', task.get( 'rabbitmq' ) );
 
       bind_queue.step( 'create connection channel', function(){
-        var connection = bind_queue.get( 'rabbitmq-connection' );
+        var rabbitmq = bind_queue.get( 'rabbitmq' ),
+            rabbitmq_internals = rabbitmq.getInternals(),
+            connection = rabbitmq_internals.connection;
 
         connection.createChannel( function( error, channel ){
           if( error ) return bind_queue.end( error );
