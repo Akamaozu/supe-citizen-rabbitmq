@@ -23,10 +23,9 @@ module.exports = function( citizen, rabbitmq_citizen_name ) {
     citizen.request.send( rabbitmq_citizen_name, 'create-exchange', request_args, callback );
   }
 
-  function create_queue( queue_id, exchange_id, config, callback ){
+  function create_queue( queue_id, config, callback ){
     var request_args = {};
 
-    request_args.exchange_id = exchange_id;
     request_args.queue_id = queue_id;
     request_args.config = config;
 
