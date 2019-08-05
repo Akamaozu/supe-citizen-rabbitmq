@@ -6,6 +6,7 @@ module.exports = function( citizen, rabbitmq_citizen_name ) {
 
   api.ack_item = ack_item;
   api.nack_item = nack_item;
+  api.bind_queue = bind_queue;
   api.create_queue = create_queue;
   api.cancel_queue = cancel_queue;
   api.create_exchange = create_exchange;
@@ -30,6 +31,17 @@ module.exports = function( citizen, rabbitmq_citizen_name ) {
     request_args.config = config;
 
     citizen.request.send( rabbitmq_citizen_name, 'create-queue', request_args, callback );
+  }
+
+  function bind_queue( queue_id, exchange_id, bind_key, options, callback ){
+    var request_args = {};
+
+    request_args.exchange_id = exchange_id;
+    request_args.queue_id = queue_id;
+    request_args.bind_key = bind_key;
+    request_args.options = options;
+
+    citizen.request.send( rabbitmq_citizen_name, 'bind-queue', request_args, callback );
   }
 
   function cancel_queue( queue_id, callback ){

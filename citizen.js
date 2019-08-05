@@ -16,6 +16,7 @@ require( './steps/handle-request-publish-to-exchange' )( app );
 require( './steps/handle-request-create-queue' )( app );
 require( './steps/handle-request-cancel-queue' )( app );
 require( './steps/handle-request-consume-queue' )( app );
+require( './steps/handle-request-bind-queue' )( app );
 require( './steps/handle-request-ack-item' )( app );
 require( './steps/handle-request-nack-item' )( app );
 
