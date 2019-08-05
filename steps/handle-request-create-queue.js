@@ -43,7 +43,8 @@ module.exports = function( task, config ){
       handle_request.set( 'options', request.data.options );
 
       handle_request.step( 'ensure queue id is unique', function(){
-        var queues = task.get( 'queues' );
+        var queues = task.get( 'queues' ),
+            queue_id = handle_request.get( 'queue-id' );
 
         if( ! queues ){
           queues = {};
@@ -68,7 +69,8 @@ module.exports = function( task, config ){
         var connection = handle_request.get( 'rabbitmq-connection' ),
             queue_options = handle_request.get( 'options' ),
             queue_id = handle_request.get( 'queue-id' ),
-            queue = create_rabbitmq_queue( options );
+            queues = task.get( 'queues' ),
+            queue = create_rabbitmq_queue( queue_options );
 
         // end task if queue or connection has an error
           queue.on( 'error', end_request_handler_on_error );
