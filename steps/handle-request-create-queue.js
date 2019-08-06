@@ -108,7 +108,7 @@ module.exports = function( task, config ){
       });
 
       handle_request.step( 'assert queue', function(){
-        var connection = handle_request.get( 'connection' ),
+        var connection = handle_request.get( 'rabbitmq-connection' ),
             queue = handle_request.get( 'queue' );
 
         queue.on( 'ready', function(){
