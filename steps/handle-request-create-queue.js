@@ -97,6 +97,8 @@ module.exports = function( task, config ){
             console.log( log_entry );
           });
 
+        queues[ queue_id ] = queue;
+
         handle_request.set( 'queue', queue );
         handle_request.next();
 
