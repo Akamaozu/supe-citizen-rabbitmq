@@ -31,9 +31,9 @@ module.exports = function( task, config ){
           bind_key = request.data.bind_key,
           options = request.data.options;
 
-      if( ! exchange_id ) return end_request( new Error( 'exchange id not specified' ) );
-      if( ! queue_id ) return end_request( new Error( 'queue id not specified' ) );
-      if( ! bind_key ) return end_request( new Error( 'bind key not specified' ) );
+      if( ! exchange_id ) throw new Error( 'exchange id not specified' );
+      if( ! queue_id ) throw new Error( 'queue id not specified' );
+      if( ! bind_key ) throw new Error( 'bind key not specified' );
       if( ! options ) options = {};
 
       var bind_queue = create_task();
