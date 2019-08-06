@@ -25,10 +25,10 @@ module.exports = function( task, config ){
 
     function create_exchange( request, end_request ){
       var exchange_id = request.data.exchange_id,
-          options = request.data.options;
+          config = request.data.config;
 
       if( ! exchange_id ) return end_request( new Error ( 'exchange id not specified' ) );
-      if( ! options ) options = {};
+      if( ! config ) config = {};
 
       var exchanges = task.get( 'exchanges' );
 
@@ -40,13 +40,13 @@ module.exports = function( task, config ){
       if( exchanges.hasOwnProperty( exchange_id ) ) return end_request( new Error( 'exchange "' + exchange_id + '" already exists' ) );
 
       var exchange_config = {
-            type: options.type ? options.type : 'default',
-            name: options.name ? options.name : '',
-            durable: options.durable ? options.durable : true,
-            noReply: options.noReply ? options.noReply : false,
-            internal: options.internal ? options.internal : false,
-            autoDelete: options.autoDelete ? options.autoDelete : false,
-            alternateExchange: options.alternateExchange ? options.alternateExchange : undefined
+            type: config.type ? config.type : 'default',
+            name: config.name ? config.name : '',
+            durable: config.durable ? config.durable : true,
+            noReply: config.noReply ? config.noReply : false,
+            internal: config.internal ? config.internal : false,
+            autoDelete: config.autoDelete ? config.autoDelete : false,
+            alternateExchange: config.alternateExchange ? config.alternateExchange : undefined
           };
 
       var rabbitmq = task.get( 'rabbitmq' );
