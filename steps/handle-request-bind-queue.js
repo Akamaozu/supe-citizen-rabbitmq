@@ -39,7 +39,13 @@ module.exports = function( task, config ){
       var bind_queue = create_task();
 
       bind_queue.callback( function( error ){
-        if( error ) return end_request( error );
+        var log_entry = 'action=bind-queue success='+ ( error ? 'false' : 'true' ) +' id=' + queue_id + ' exchange-id=' + exchange_id + ' bind-key=' + bind_key;
+
+        if( error ) log_entry += ' error="' + error.message + '"';
+
+        console.log( log_entry );
+
+        if( error ) end_request( error );
         else end_request( null, true );
       });
 
