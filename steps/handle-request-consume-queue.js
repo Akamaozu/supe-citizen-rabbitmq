@@ -55,7 +55,7 @@ module.exports = function( task, config ){
           ack: ack
         };
 
-        citizen.noticeboard.publish( citizen.get_name() +'-queue-'+ queue_id +'-new-item', {
+        citizen.noticeboard.notify( citizen.get_name() +'-queue-'+ queue_id +'-new-item', {
           item: item,
           item_id: item_id,
           queue_id: queue_id
