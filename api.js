@@ -9,6 +9,7 @@ module.exports = function( citizen, rabbitmq_citizen_name ) {
   api.bind_queue = bind_queue;
   api.create_queue = create_queue;
   api.cancel_queue = cancel_queue;
+  api.consume_queue = consume_queue;
   api.create_exchange = create_exchange;
   api.publish_to_exchange = publish_to_exchange;
 
@@ -30,6 +31,15 @@ module.exports = function( citizen, rabbitmq_citizen_name ) {
     request_args.config = config;
 
     citizen.request.send( rabbitmq_citizen_name, 'create-queue', request_args, callback );
+  }
+
+  function consume_queue( queue_id, options, callback ){
+    var request_args = {};
+
+    request_args.queue_id = queue_id;
+    request_args.options = options;
+
+    citizen.request.send( rabbitmq_citizen_name, 'consume-queue', request_args, callback );
   }
 
   function bind_queue( queue_id, exchange_id, bind_key, options, callback ){
