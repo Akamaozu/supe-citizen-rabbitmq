@@ -21,7 +21,9 @@ require( './steps/handle-request-ack-item' )( app );
 require( './steps/handle-request-nack-item' )( app );
 
 app.step( 'start processing requests', function(){
-  citizen.mail.receive();
+  var rabbitmq = app.get( 'rabbitmq' );
+
+  rabbitmq.on( 'connected', citizen.mail.receive );
 });
 
 app.callback( function( error ){
