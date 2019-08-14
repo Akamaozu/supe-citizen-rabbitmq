@@ -16,6 +16,12 @@ module.exports = function( citizen, rabbitmq_citizen_name ) {
   return api;
 
   function create_exchange( exchange_id, config, callback ){
+    var args_given = arguments.length;
+    if( args_given == 2 && typeof config == 'function' ){
+      callback = config;
+      config = {};
+    }
+
     var request_args = {
       exchange_id: exchange_id,
       config: config
@@ -25,15 +31,24 @@ module.exports = function( citizen, rabbitmq_citizen_name ) {
   }
 
   function create_queue( queue_id, config, callback ){
-    var request_args = {};
+    var args_given = arguments.length;
+    if( args_given == 2 && typeof config == 'function' ){
+      callback = config;
+      config = {};
+    }
 
-    request_args.queue_id = queue_id;
-    request_args.config = config;
+    var request_args = { queue_id: queue_id, config: config };
 
     citizen.request.send( rabbitmq_citizen_name, 'create-queue', request_args, callback );
   }
 
   function consume_queue( queue_id, options, callback ){
+    var args_given = arguments.length;
+    if( args_given == 2 && typeof options == 'function' ){
+      callback = options;
+      options = {};
+    }
+
     var request_args = {};
 
     request_args.queue_id = queue_id;
@@ -43,6 +58,12 @@ module.exports = function( citizen, rabbitmq_citizen_name ) {
   }
 
   function bind_queue( queue_id, exchange_id, bind_key, options, callback ){
+    var args_given = arguments.length;
+    if( args_given == 4 && typeof options == 'function' ){
+      callback = options;
+      options = {};
+    }
+
     var request_args = {};
 
     request_args.exchange_id = exchange_id;
@@ -57,20 +78,38 @@ module.exports = function( citizen, rabbitmq_citizen_name ) {
     citizen.request.send( rabbitmq_citizen_name, 'cancel-queue', { queue_id: queue_id }, callback );
   }
 
-  function ack_item( item_id, callback ){
+  function ack_item( item_id, options, callback ){
+    var args_given = arguments.length;
+    if( args_given == 2 && typeof options == 'function' ){
+      callback = options;
+      options = {};
+    }
+
     citizen.request.send( rabbitmq_citizen_name, 'ack-item', { item_id: item_id }, callback );
   }
 
-  function nack_item( item_id, callback ){
+  function nack_item( item_id, options, callback ){
+    var args_given = arguments.length;
+    if( args_given == 2 && typeof options == 'function' ){
+      callback = options;
+      options = {};
+    }
+
     citizen.request.send( rabbitmq_citizen_name, 'nack-item', { item_id: item_id }, callback );
   }
 
-  function publish_to_exchange( exchange_id, item, config, callback ){
+  function publish_to_exchange( exchange_id, item, options, callback ){
+    var args_given = arguments.length;
+    if( args_given == 3 && typeof options == 'function' ){
+      callback = options;
+      options = {};
+    }
+
     var request_args = {};
 
     request_args.exchange_id = exchange_id;
     request_args.item = item;
-    request_args.options = config;
+    request_args.options = options;
 
     citizen.request.send( rabbitmq_citizen_name, 'publish-to-exchange', request_args, callback );
   }
