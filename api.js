@@ -85,7 +85,12 @@ module.exports = function( citizen, rabbitmq_citizen_name ) {
       options = {};
     }
 
-    citizen.request.send( rabbitmq_citizen_name, 'ack-item', { item_id: item_id }, callback );
+    var request_args = {};
+
+    request_args.item_id = item_id;
+    request_args.options = options;
+
+    citizen.request.send( rabbitmq_citizen_name, 'ack-item', request_args, callback );
   }
 
   function nack_item( item_id, options, callback ){
@@ -95,7 +100,12 @@ module.exports = function( citizen, rabbitmq_citizen_name ) {
       options = {};
     }
 
-    citizen.request.send( rabbitmq_citizen_name, 'nack-item', { item_id: item_id }, callback );
+    var request_args = {};
+
+    request_args.item_id = item_id;
+    request_args.options = options;
+
+    citizen.request.send( rabbitmq_citizen_name, 'nack-item', request_args, callback );
   }
 
   function publish_to_exchange( exchange_id, item, options, callback ){
