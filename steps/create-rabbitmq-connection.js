@@ -1,4 +1,4 @@
-var jackrabbit = require('jackrabbit');
+var jackrabbit = require('@pager/jackrabbit');
 
 module.exports = function( task, config ){
   if( ! config ) config = {};

@@ -1,4 +1,4 @@
-var create_rabbitmq_queue = require('jackrabbit/lib/queue'),
+var create_rabbitmq_queue = require('@pager/jackrabbit/lib/queue'),
     create_task = require('cjs-task');
 
 module.exports = function( task, config ){
