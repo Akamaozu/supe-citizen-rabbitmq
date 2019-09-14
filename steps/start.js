@@ -10,7 +10,7 @@ module.exports = function( task, config ){
   task.step( 'start rabbitmq citizen', function(){
     var citizen = task.get( 'citizen' );
 
-    citizen.supervisor.start( rabbitmq_citizen_name, path_to_rabbitmq_citizen, function( error ){
+    citizen.supervisor.start( rabbitmq_citizen_name, path_to_rabbitmq_citizen, config, function( error ){
       if( error ) return task.end( error );
       else task.next();
     });
