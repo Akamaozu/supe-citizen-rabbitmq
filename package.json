@@ -1,6 +1,6 @@
 {
   "name": "supe-citizen-rabbitmq",
-  "version": "3.2.5",
+  "version": "3.2.6",
   "description": "RabbitMQ Connection as a Supe Citizen",
   "main": "index.js",
   "scripts": {
