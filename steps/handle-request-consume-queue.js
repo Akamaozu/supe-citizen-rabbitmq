@@ -38,7 +38,7 @@ module.exports = function( task, config ){
 
       queue.consume( handle_incoming_queue_item, options );
 
-      function handle_incoming_queue_item( item, ack, nack ){
+      function handle_incoming_queue_item( item, ack, nack, raw ){
         var items = task.get( 'items' );
 
         if( ! items ){
@@ -58,7 +58,9 @@ module.exports = function( task, config ){
         citizen.noticeboard.notify( citizen.get_name() +'-queue-'+ queue_id +'-new-item', {
           item: item,
           item_id: item_id,
-          queue_id: queue_id
+          queue_id: queue_id,
+          item_fields: raw.fields,
+          item_properties: raw.properties
         });
       }
 
