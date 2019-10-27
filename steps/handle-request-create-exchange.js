@@ -53,7 +53,7 @@ module.exports = function( task, config ){
       if( ! rabbitmq.hasOwnProperty( exchange_config.type ) ) return end_request( new Error( 'unknown exchange type: "' + exchange_config.type + '"' ) );
 
       // create exchange
-        var created_exchange = rabbitmq.exchange()( exchange_config.type, exchange_config.name, exchange_config );
+        var created_exchange = rabbitmq.exchange( exchange_config.type, exchange_config.name, exchange_config );
         exchanges[ exchange_id ] = created_exchange;
 
       // cleanup on close
