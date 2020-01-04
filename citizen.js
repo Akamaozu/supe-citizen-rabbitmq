@@ -11,6 +11,17 @@ app.set( 'citizen', citizen );
 require( './steps/create-rabbitmq-connection' )( app );
 require( './steps/log-connection-lifecycle-events' )( app );
 
+app.step( 'crash when connection ends', function(){
+  var rabbitmq = app.get( 'rabbitmq' );
+
+  rabbitmq.on( 'error', function( error ){
+    console.log( 'action=crash-on-error reason="'+ error.message +'"' );
+    return app.end( error );
+  });
+
+  app.next();
+});
+
 require( './steps/handle-request-create-exchange' )( app );
 require( './steps/handle-request-publish-to-exchange' )( app );
 require( './steps/handle-request-create-queue' )( app );
